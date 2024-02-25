@@ -1,12 +1,21 @@
 import React, { useRef, useState } from 'react';
 
-const Camera: React.FC = () => {
+interface ImageSize {
+  width: number;
+  height: number;
+}
+
+const CameraApp: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [imageData, setImageData] = useState<string | null>(null);
+  const [imageSize, setImageSize] = useState<ImageSize | null>(null);
 
   const getVideo = () => {
-    navigator.mediaDevices.getUserMedia({ video: true })
+    const constraints = {
+      video: { facingMode: "environment" } // 후방 카메라 사용 설정
+    };
+
+    navigator.mediaDevices.getUserMedia(constraints)
       .then(stream => {
         const video = videoRef.current;
         if (video) {
@@ -22,33 +31,42 @@ const Camera: React.FC = () => {
   const takePhoto = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    
+
     if (video && canvas) {
       const width = video.videoWidth;
       const height = video.videoHeight;
+
       canvas.width = width;
       canvas.height = height;
       canvas.getContext('2d')?.drawImage(video, 0, 0, width, height);
-
-      // 이미지 데이터를 Base64 형식으로 변환
-      const imageData = canvas.toDataURL('image/png');
-      setImageData(imageData);
+      setImageSize({ width, height });
     }
   };
 
+
   const uploadImage = async () => {
-    if (imageData) {
-      // 서버 업로드 로직을 여기에 추가
-      // 예: fetch API를 사용하여 서버에 POST 요청
-      // const response = await fetch('/api/upload', {
-      //   method: 'POST',
-      //   body: JSON.stringify({ image: imageData }),
-      //   headers: {
-      //     'Content-Type': 'application/json'
-      //   },
-      // });
-      // const data = await response.json();
-      // console.log(data);
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const imageDataUrl = canvas.toDataURL('image/jpeg');
+
+      // 이 부분에서 서버 엔드포인트로 POST 요청을 보냅니다.
+      try {
+        const response = await fetch('/your-server-endpoint', {
+          method: 'POST',
+          body: JSON.stringify({ image: imageDataUrl }),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Server response wasn't OK");
+        }
+
+        console.log('Image uploaded successfully');
+      } catch (error) {
+        console.error('Failed to upload the image', error);
+      }
     }
   };
 
@@ -57,15 +75,23 @@ const Camera: React.FC = () => {
       <video ref={videoRef}></video>
       <button onClick={getVideo}>Activate Camera</button>
       <button onClick={takePhoto}>Take Photo</button>
+      <button onClick={uploadImage}>Upload Image</button>
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
-      {imageData && (
-        <>
-          <img src={imageData} alt="Captured" />
-          <button onClick={uploadImage}>Upload Image</button>
-        </>
-      )}
+      {imageSize && <p>Image Size: {imageSize.width} x {imageSize.height}</p>}
     </div>
   );
-};
 
-export default Camera;
+//   return (
+//     <div>
+//       <video ref={videoRef}></video>
+//       <button onClick={getVideo}>Activate Camera</button>
+//       <button onClick={takePhoto}>Take Photo</button>
+//       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
+//       {imageSize && <p>Image Size: {imageSize.width} x {imageSize.height}</p>}
+//     </div>
+//   );
+
+}
+  
+
+export default CameraApp;

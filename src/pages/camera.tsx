@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 interface ImageSize {
   width: number;
@@ -11,6 +11,7 @@ const CameraApp: React.FC = () => {
   const [imageSize, setImageSize] = useState<ImageSize | null>(null);
   const [useFrontCamera, setUseFrontCamera] = useState(false); // 카메라 전환 상태
 
+  
 
   const getVideo = () => {
     const constraints = {
@@ -31,6 +32,12 @@ const CameraApp: React.FC = () => {
         console.error("error:", err);
       });
   };
+
+  useEffect(() => {
+    getVideo(); // 컴포넌트가 마운트될 때 카메라를 활성화합니다.
+  }, [useFrontCamera]); // useFrontCamera가 변경될 때마다 getVideo 함수를 재호출합니다.
+
+
 
   const takePhoto = () => {
     const video = videoRef.current;

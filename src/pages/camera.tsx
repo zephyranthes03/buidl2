@@ -9,10 +9,14 @@ const CameraApp: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [imageSize, setImageSize] = useState<ImageSize | null>(null);
+  const [useFrontCamera, setUseFrontCamera] = useState(false); // 카메라 전환 상태
+
 
   const getVideo = () => {
     const constraints = {
-      video: { facingMode: "environment" } // 후방 카메라 사용 설정
+      video: { 
+        facingMode: useFrontCamera ? "user" : "environment" // 앞면 또는 후면 카메라 설정
+      }
     };
 
     navigator.mediaDevices.getUserMedia(constraints)
@@ -43,6 +47,19 @@ const CameraApp: React.FC = () => {
     }
   };
 
+  const switchCamera = () => {
+    // 현재 스트림을 중지합니다.
+    if (videoRef.current && videoRef.current.srcObject) {
+      const stream = videoRef.current.srcObject as MediaStream;
+      stream.getTracks().forEach(track => track.stop());
+    }
+
+    // 카메라 전환 상태를 변경합니다.
+    setUseFrontCamera(!useFrontCamera);
+
+    // 새로운 카메라로 비디오를 다시 시작합니다.
+    getVideo();
+  };
 
   const uploadImage = async () => {
     const canvas = canvasRef.current;
@@ -74,6 +91,7 @@ const CameraApp: React.FC = () => {
     <div>
       <video ref={videoRef}></video>
       <button onClick={getVideo}>Activate Camera</button>
+      <button onClick={switchCamera}>Switch Camera</button>      
       <button onClick={takePhoto}>Take Photo</button>
       <button onClick={uploadImage}>Upload Image</button>
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>

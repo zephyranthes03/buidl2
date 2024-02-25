@@ -55,8 +55,6 @@ const CameraApp: React.FC = () => {
       savePhoto(canvas); // 사진을 저장하는 함수 호출
 
     }
-
-
   };
 
 
@@ -71,7 +69,7 @@ const CameraApp: React.FC = () => {
     link.click();
     document.body.removeChild(link);
   };
-  
+
   const switchCamera = () => {
     // 현재 스트림을 중지합니다.
     if (videoRef.current && videoRef.current.srcObject) {
@@ -80,7 +78,11 @@ const CameraApp: React.FC = () => {
     }
 
     // 카메라 전환 상태를 변경합니다.
-    setUseFrontCamera(!useFrontCamera);
+    if (useFrontCamera) {
+        setUseFrontCamera(true);
+    } else {
+        setUseFrontCamera(false);
+    }
 
     // 새로운 카메라로 비디오를 다시 시작합니다.
     getVideo();
@@ -115,7 +117,6 @@ const CameraApp: React.FC = () => {
   return (
     <div>
       <video ref={videoRef}></video>
-      <button onClick={getVideo}>Activate Camera</button>
       <button onClick={switchCamera}>Switch Camera</button>      
       <button onClick={takePhoto}>Take Photo</button>
       <button onClick={uploadImage}>Upload Image</button>

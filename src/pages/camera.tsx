@@ -52,18 +52,26 @@ const CameraApp: React.FC = () => {
       canvas.getContext('2d')?.drawImage(video, 0, 0, width, height);
       setImageSize({ width, height });
 
-  return (
-    <div>
-      <video ref={videoRef}></video>
-      <button onClick={getVideo}>Activate Camera</button>
-      <button onClick={takePhoto}>Take Photo</button>
-      <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
-      {imageSize && <p>Image Size: {imageSize.width} x {imageSize.height}</p>}
-    </div>
-  );      
+      savePhoto(canvas); // 사진을 저장하는 함수 호출
+
     }
+
+
   };
 
+
+  const savePhoto = (canvas: HTMLCanvasElement) => {
+    const imageDataUrl = canvas.toDataURL('image/jpeg'); // 캔버스의 내용을 이미지 데이터로 변환
+
+    // 이미지 데이터를 이용하여 사용자에게 다운로드 링크 제공
+    const link = document.createElement('a');
+    link.href = imageDataUrl;
+    link.download = 'captured-photo.jpeg'; // 저장될 파일명
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  
   const switchCamera = () => {
     // 현재 스트림을 중지합니다.
     if (videoRef.current && videoRef.current.srcObject) {

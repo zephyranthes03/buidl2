@@ -51,6 +51,16 @@ const CameraApp: React.FC = () => {
       canvas.height = height;
       canvas.getContext('2d')?.drawImage(video, 0, 0, width, height);
       setImageSize({ width, height });
+
+  return (
+    <div>
+      <video ref={videoRef}></video>
+      <button onClick={getVideo}>Activate Camera</button>
+      <button onClick={takePhoto}>Take Photo</button>
+      <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
+      {imageSize && <p>Image Size: {imageSize.width} x {imageSize.height}</p>}
+    </div>
+  );      
     }
   };
 
@@ -106,15 +116,7 @@ const CameraApp: React.FC = () => {
     </div>
   );
 
-//   return (
-//     <div>
-//       <video ref={videoRef}></video>
-//       <button onClick={getVideo}>Activate Camera</button>
-//       <button onClick={takePhoto}>Take Photo</button>
-//       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
-//       {imageSize && <p>Image Size: {imageSize.width} x {imageSize.height}</p>}
-//     </div>
-//   );
+
 
 }
   

@@ -117,9 +117,9 @@ const CameraApp: React.FC = () => {
   return (
     <div>
       <video ref={videoRef}></video>
-      <button onClick={switchCamera}>Switch Camera</button>      
-      <button onClick={takePhoto}>Take Photo</button>
-      <button onClick={uploadImage}>Upload Image</button>
+      <button className="m-4" onClick={switchCamera}>Switch Camera</button> 
+      <button className="m-4" onClick={takePhoto}>Take Photo</button>
+      <button className="m-4" onClick={uploadImage}>Upload Image</button>
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
       {imageSize && <p>Image Size: {imageSize.width} x {imageSize.height}</p>}
     </div>

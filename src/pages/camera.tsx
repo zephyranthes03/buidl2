@@ -79,9 +79,9 @@ const CameraApp: React.FC = () => {
 
     // 카메라 전환 상태를 변경합니다.
     if (useFrontCamera) {
-        setUseFrontCamera(true);
-    } else {
         setUseFrontCamera(false);
+    } else {
+        setUseFrontCamera(true);
     }
 
     // 새로운 카메라로 비디오를 다시 시작합니다.

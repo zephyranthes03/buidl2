@@ -21,13 +21,20 @@ export default function About() {
           height={78}
           priority
         />
-        <div>
-          FTS team 
-        </div>
-        <p></p>
-        <div>
-          Imgroo project. 
-        </div>
+      </div>
+      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:text-left ">
+            <h2 className={`mb-3 text-2xl font-semibold`}>
+              FTS Team {" "}
+            </h2>
+            <p className={`m-0 max-w-[80ch] text-sm opacity-50 px-8`}>
+              FTS 프로젝트 팀 소개
+            </p>
+            <h2 className={`mb-3 text-2xl font-semibold mt-8`}>
+              Imgroo project {" "}
+            </h2>
+            <p className={`m-0 max-w-[80ch] text-sm opacity-50 px-8`}>
+              커뮤니티 기반 만성 피부 질환 진단 및 케어서비스 
+            </p>
       </div>
 
       <Footer />

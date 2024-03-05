@@ -1,4 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 
 interface ImageSize {
   width: number;
@@ -115,6 +117,10 @@ const CameraApp: React.FC = () => {
   };
 
   return (
+    <main
+      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
+    >
+      <Header />
     <div>
       <video ref={videoRef}></video>
       <button className="m-4" onClick={switchCamera}>Switch Camera</button> 
@@ -123,7 +129,9 @@ const CameraApp: React.FC = () => {
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
       {imageSize && <p>Image Size: {imageSize.width} x {imageSize.height}</p>}
     </div>
-  );
+    <Footer />
+    </main>
+    );
 
 
 

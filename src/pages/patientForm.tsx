@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import Image from "next/image";
+
 import { PatientData, usePatientData } from '../contexts/PatientDataContext';
 
 const PatientForm: React.FC = () => {
@@ -31,7 +33,7 @@ const PatientForm: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setPatientData(localPatientData);
-    router.push('/requestResult');
+    router.push('/RequestResult');
     // router.push({
     //   pathname: '/next',
     //   query: { name }, // 쿼리 파라미터로 name 전달
@@ -43,6 +45,8 @@ const PatientForm: React.FC = () => {
       <label>
         이미지 업로드:
       </label>
+      {localPatientData.imageBase64 && <Image src={localPatientData.imageBase64} width={1080} height={1920} alt="Uploaded" />}
+
       <input type="file" onChange={handleImageChange} />
       <br />
       <label>

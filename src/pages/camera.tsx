@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
+import { PatientData, usePatientData } from '../contexts/PatientDataContext';
 
 interface ImageSize {
   width: number;
@@ -10,9 +12,15 @@ interface ImageSize {
 const CameraApp: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [imageSize, setImageSize] = useState<ImageSize | null>(null);
+  const defaultImageSize: ImageSize = { width: 1080, height: 1920 };  
+  const [imageSize, setImageSize] = useState<ImageSize | null>(defaultImageSize);
   const [useFrontCamera, setUseFrontCamera] = useState(false); // 카메라 전환 상태
 
+
+  const router = useRouter();
+  const { setPatientData } = usePatientData();
+
+  const [localPatientData, setLocalPatientData] = useState<PatientData>({ name: '', ageGroup: '', imageBase64: '' });
   
 
   const getVideo = () => {
@@ -25,14 +33,21 @@ const CameraApp: React.FC = () => {
     navigator.mediaDevices.getUserMedia(constraints)
       .then(stream => {
         const video = videoRef.current;
+        
+
+
         if (video) {
           video.srcObject = stream;
+          video.width = defaultImageSize.width;
+          video.height = defaultImageSize.height;
+
           video.play();
         }
       })
       .catch(err => {
         console.error("error:", err);
       });
+
   };
 
   useEffect(() => {
@@ -46,6 +61,12 @@ const CameraApp: React.FC = () => {
     const canvas = canvasRef.current;
 
     if (video && canvas) {
+
+      if (defaultImageSize) {
+        video.width = defaultImageSize.width;
+        video.height = defaultImageSize.height;
+      }
+
       const width = video.videoWidth;
       const height = video.videoHeight;
 
@@ -63,13 +84,15 @@ const CameraApp: React.FC = () => {
   const savePhoto = (canvas: HTMLCanvasElement) => {
     const imageDataUrl = canvas.toDataURL('image/jpeg'); // 캔버스의 내용을 이미지 데이터로 변환
 
-    // 이미지 데이터를 이용하여 사용자에게 다운로드 링크 제공
-    const link = document.createElement('a');
-    link.href = imageDataUrl;
-    link.download = 'captured-photo.jpeg'; // 저장될 파일명
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    setPatientData({ name: '', ageGroup: '', imageBase64: imageDataUrl });
+    router.push('/patientForm');
+    // // 이미지 데이터를 이용하여 사용자에게 다운로드 링크 제공
+    // const link = document.createElement('a');
+    // link.href = imageDataUrl;
+    // link.download = 'captured-photo-' + new Date().toISOString() + '.jpeg'; // 저장될 파일명
+    // document.body.appendChild(link);
+    // link.click();
+    // document.body.removeChild(link);
   };
 
   const switchCamera = () => {
@@ -118,15 +141,17 @@ const CameraApp: React.FC = () => {
 
   return (
     <main
-    >
+      className={`flex min-h-screen flex-col items-center justify-between p-24`}>
       <Header />
     <div>
       <video ref={videoRef}></video>
       <button className="m-4" onClick={switchCamera}>Switch Camera</button> 
       <button className="m-4" onClick={takePhoto}>Take Photo</button>
       <button className="m-4" onClick={uploadImage}>Upload Image</button>
+      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700/10 after:dark:from-sky-900 after:dark:via-[#0141ff]/40 before:lg:h-[360px]">
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
-      {imageSize && <p>Image Size: {imageSize.width} x {imageSize.height}</p>}
+      </div>
+      {defaultImageSize && <p>Image Size: {defaultImageSize.width} x {defaultImageSize.height}</p>}
     </div>
     <Footer />
     </main>

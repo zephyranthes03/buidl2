@@ -39,7 +39,7 @@ const RequestResult: React.FC = () => {
           <p>증상 발현부위: {patientData.affectedArea.join(',')}</p>
           <p>증상 발현 패턴: {patientData.progress.join(',')}</p>
           <p>연령대: {patientData.ageGroup}</p>
-          <button onClick={handleApiCall}>진단 결과 보기</button>
+          <button onClick={handleApiCall} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">진단 결과 보기</button>
 
           {apiResponse && (
         <div>

@@ -11,6 +11,7 @@ export interface PostData {
 export interface ApiResponse {
   success: boolean;
   message: string;
+  message_array: string[];
   // 다른 필드들을 추가할 수 있습니다.
 }
 
@@ -23,7 +24,7 @@ export const postToExternalApi = async (data: PostData): Promise<ApiResponse> =>
     return response.data;
   } catch (error) {
     console.error('Error during API request:', error);
-    return { success: false, message: 'An error occurred' };
+    return { success: false, message: 'An error occurred', message_array: [] };
 
     // throw error;
   }

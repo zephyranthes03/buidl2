@@ -7,27 +7,37 @@ import { PostData, ApiResponse, postToExternalApi } from '../rest/symptom_index'
 
 const RequestResult: React.FC = () => {
 
-  const { patientData } = usePatientData();
+  const { patientData } = usePatientData();  
   const request: PostData = { symptom_text : '', base64_image: ''};
-  const [apiResponse, setApiResponse] = useState<ApiResponse>({ success: false, message: '' });
+  const [apiResponse, setApiResponse] = useState<ApiResponse>({ success: false, message: '', message_array: [] });
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // 비동기 함수 정의
-    // 함수 호출
-  }, []); // 빈 배열은 컴포넌트 마운트 시에만 useEffect를 실행하게 함
-  
-  const handleApiCall = async () => {
-    request.base64_image = patientData.imageBase64;
-    request.symptom_text = "증상 : " + patientData.symptom.join(',') + ", "
-                            + "증상 발현부위 : " + patientData.affectedArea.join(',') + ", "
-                            + "증상 발현 패턴 : " + patientData.progress.join(',') + ", "
-                            + "연령대 : " + patientData.ageGroup;
-    console.log(request.symptom_text);
-      const response = await postToExternalApi(request);
-    setApiResponse(response);
-    console.log(response);
-  };
+    const handleApiCall = async () => {
+      setIsLoading(true); // 로딩 시작
 
+      const request: PostData = {
+        base64_image: patientData.imageBase64,
+        symptom_text: `증상 : ${patientData.symptom.join(',')}, ` +
+                      `증상 발현부위 : ${patientData.affectedArea.join(',')}, ` +
+                      `증상 발현 패턴 : ${patientData.progress.join(',')}, ` +
+                      `연령대 : ${patientData.ageGroup}`
+      };
+      const response = await postToExternalApi(request);
+      const messageArray = response.message.split('\n');
+      setApiResponse({
+        ...response,
+        message_array: messageArray
+      });
+      setIsLoading(false); // 로딩 완료
+    };
+
+    if (patientData) {
+      handleApiCall();
+    }
+
+  }, [patientData]); // patientData를 의존성 배열에 추가
+  
 
 //   const [patientData, setPatientData] = useState<PatientData>({ name: '', ageGroup: '', imageBase64: '' });
   return (
@@ -39,19 +49,34 @@ const RequestResult: React.FC = () => {
           <p>증상 발현부위: {patientData.affectedArea.join(',')}</p>
           <p>증상 발현 패턴: {patientData.progress.join(',')}</p>
           <p>연령대: {patientData.ageGroup}</p>
-          <button onClick={handleApiCall} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">진단 결과 보기</button>
+          {/* <button onClick={handleApiCall} className="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-4 rounded">진단 결과 보기</button> */}
 
-          {apiResponse && (
-        <div>
-          <p>진단 성공/실패: {apiResponse.success.toString()}</p>
-          <p>진단 결과: {apiResponse.message}</p>
+          {/* 이미지 출력 */}
+          {/* {patientData.imageBase64 && (
+            <Image src={patientData.imageBase64} width={1080} height={1920} alt="Uploaded" />
+          )} */}
         </div>
       )}
-          {/* 이미지를 base64로 전달받았을 경우 이미지 출력 */}
-          {patientData.imageBase64 && <Image src={patientData.imageBase64} width={1080} height={1920} alt="Uploaded" />}
-        </div>
-      )}
+
+      <div>
+        {apiResponse.message_array && apiResponse.message_array.length > 0 && (
+          <div>
+            <p>진단 성공/실패: {apiResponse.success.toString()}</p>
+            <p>진단 결과:</p>
+            {apiResponse.message_array.map((line, index) => (
+              <p key={index}>{line}</p>
+            ))}
+          </div>
+        )}
+        {isLoading && (
+          <div className="flex justify-center items-center">
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+          </div>
+        )}
+
+      </div>
     </div>
+        
   );
 };
 

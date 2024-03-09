@@ -144,8 +144,8 @@ const CameraApp: React.FC = () => {
       <video ref={videoRef}></video>
       </div>
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-3 lg:text-left">
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={switchCamera}>Switch Camera</button> &nbsp;
-      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={takePhoto}>Take Photo</button>
+      <button className="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-4 rounded" onClick={switchCamera}>Switch Camera</button> &nbsp;
+      <button className="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-4 rounded" onClick={takePhoto}>Take Photo</button>
       {/* <button className="m-4" onClick={uploadImage}>Upload Image</button> */}
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
       {/* {defaultImageSize && <p>Image Size: {defaultImageSize.width} x {defaultImageSize.height}</p>} */}

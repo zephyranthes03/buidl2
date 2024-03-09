@@ -51,12 +51,12 @@ const PatientForm: React.FC = () => {
       <label>
         환자 이름:
     </label>
-        <input type="text" value={patientData.name} onChange={handleNameChange} className="bg-transparent text-white border border-gray-300 p-0 rounded-md" />
+        <input type="text" value={patientData.name} onChange={handleNameChange} className="bg-transparent  border border-gray-300 p-0 rounded-md" />
       <br />
       <label>
         연령대:
     </label>
-        <select value={patientData.ageGroup} onChange={handleAgeGroupChange} className="bg-transparent text-white border border-gray-100 p-0 rounded-md appearance-none">
+        <select value={patientData.ageGroup} onChange={handleAgeGroupChange} className="bg-transparent  border border-gray-100 p-0 rounded-md appearance-none">
           <option value="영아">0-2세(영아)</option>
           <option value="유아">2-6세(유아)</option>
           <option value="어린이">6-13세(어린이)</option>

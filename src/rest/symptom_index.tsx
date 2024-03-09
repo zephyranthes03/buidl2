@@ -17,8 +17,8 @@ export interface ApiResponse {
 // API에 POST 요청을 보내는 함수
 export const postToExternalApi = async (data: PostData): Promise<ApiResponse> => {
   try {
-    // const response = await axios.post<ApiResponse>('http://imgroo.kr:8003/symptom_index/llm_base64', data);
-    const response = await axios.post<ApiResponse>('http://localhost:8003/symptom_index/llm_base64', data);
+    const response = await axios.post<ApiResponse>('http://imgroo.kr:8003/symptom_index/llm_base64', data);
+    // const response = await axios.post<ApiResponse>('http://localhost:8003/symptom_index/llm_base64', data);
     console.log('Response:', response.data);
     return response.data;
   } catch (error) {

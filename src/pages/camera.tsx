@@ -81,7 +81,7 @@ const CameraApp: React.FC = () => {
   const savePhoto = (canvas: HTMLCanvasElement) => {
     const imageDataUrl = canvas.toDataURL('image/jpeg'); // 캔버스의 내용을 이미지 데이터로 변환
 
-    setPatientData({ name: '', ageGroup: '', imageBase64: imageDataUrl });
+    setPatientData({ ageGroup: '', symptom: [], affectedArea: [], progress: [], imageBase64: imageDataUrl });
     router.push('/patientForm');
     // // 이미지 데이터를 이용하여 사용자에게 다운로드 링크 제공
     // const link = document.createElement('a');
@@ -146,7 +146,7 @@ const CameraApp: React.FC = () => {
       <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
       <button className="m-4" onClick={switchCamera}>Switch Camera</button> 
       <button className="m-4" onClick={takePhoto}>Take Photo</button>
-      <button className="m-4" onClick={uploadImage}>Upload Image</button>
+      {/* <button className="m-4" onClick={uploadImage}>Upload Image</button> */}
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
       {defaultImageSize && <p>Image Size: {defaultImageSize.width} x {defaultImageSize.height}</p>}
       </div>

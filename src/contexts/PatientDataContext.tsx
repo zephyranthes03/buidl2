@@ -1,8 +1,10 @@
 import React, { createContext, useState, useContext } from 'react';
 
 export interface PatientData {
-  name: string;
   ageGroup: string;
+  symptom: string[];
+  affectedArea: string[];
+  progress: string[];
   imageBase64: string;
 }
 
@@ -26,7 +28,7 @@ interface PatientDataProviderProps {
 }
 
 export const PatientDataProvider: React.FC<PatientDataProviderProps> = ({ children }) => {
-  const [patientData, setPatientData] = useState<PatientData>({ name: '', ageGroup: '', imageBase64: '' });
+  const [patientData, setPatientData] = useState<PatientData>({ ageGroup: '', symptom: [], affectedArea: [], progress: [], imageBase64: '' });
 
   return (
     <PatientDataContext.Provider value={{ patientData, setPatientData }}>

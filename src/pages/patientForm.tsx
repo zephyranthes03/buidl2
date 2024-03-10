@@ -77,12 +77,29 @@ const PatientForm: React.FC = () => {
     <form onSubmit={handleSubmit}>
      {localPatientData.imageBase64 && <Image src={localPatientData.imageBase64} width={1080} height={1920} alt="Uploaded" />}
 
+     <label>
+        연령대: 
+      </label>
+          <select value={localPatientData.ageGroup} onChange={handleAgeGroupChange} className="bg-transparent  border border-gray-100 p-0 rounded-md appearance-none">
+            <option value="영아">0-2세(영아)</option>
+            <option value="유아">2-6세(유아)</option>
+            <option value="어린이">6-13세(어린이)</option>
+            <option value="청소년">13-19세(청소년)</option>
+            <option value="20대">20대</option>
+            <option value="30대">30대</option>
+            <option value="40대">40대</option>
+            <option value="50대">50대</option>
+            <option value="60대이상">60대이상</option>            
+            {/* 연령대 옵션 */}
+          </select>
+        <br />
+
       {/* <input type="file" onChange={handleImageChange} /> */}
       <br />
       <label>
         어떤 증상이 있나요?
       </label>
-      <br />
+      <div className="flex place-items-center grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-6 lg:text-left">
        <label className="bg-transparent border border-gray-100 p-0 rounded-md appearance-none mx-2">
         <input type="checkbox" value="붉어짐" onChange={handleSymptomChange} checked={localPatientData.symptom.includes('붉어짐')} />
         붉어짐
@@ -119,12 +136,13 @@ const PatientForm: React.FC = () => {
         <input type="checkbox" value="통증" onChange={handleSymptomChange} checked={localPatientData.symptom.includes("통증")} />
         통증
       </label>
+      </div>
       <br />
       <br />
       <label>
         발병 부위는 어디인가요?
       </label>
-      <br />
+      <div className="flex place-items-center grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-6 lg:text-left">
       <label className="bg-transparent border border-gray-100 p-0 rounded-md appearance-none mx-2">
         <input type="checkbox" value="손" onChange={handleAffectedAreaChange} checked={localPatientData.affectedArea.includes('손')} />
         손
@@ -209,13 +227,14 @@ const PatientForm: React.FC = () => {
         <input type="checkbox" value="허리" onChange={handleAffectedAreaChange} checked={localPatientData.affectedArea.includes('허리')} />
         허리
       </label>
+      </div>
       <br />
       <br />
 
       <label>
         증상의 진행 형태는 어떤가요?
       </label>
-      <br />
+      <div className="flex place-items-center grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-6 lg:text-left">
       <label className="bg-transparent border border-gray-100 p-0 rounded-md appearance-none mx-2">
         <input type="checkbox" value="어느날 갑자기" onChange={handleProgressChange} checked={localPatientData.progress.includes('어느날 갑자기')} />
         어느날 갑자기
@@ -228,10 +247,6 @@ const PatientForm: React.FC = () => {
       <input type="checkbox" value="서서히" onChange={handleProgressChange} checked={localPatientData.progress.includes('서서히')} />
         서서히
       </label>
-      <label className="bg-transparent border border-gray-100 p-0 rounded-md appearance-none mr-2">
-      <input type="checkbox" value="나타났다 사라졌다" onChange={handleProgressChange} checked={localPatientData.progress.includes('나타났다 사라졌다')} />
-      나타났다 사라졌다
-    </label>
     <label className="bg-transparent border border-gray-100 p-0 rounded-md appearance-none mr-2">
     <input type="checkbox" value="더운계절" onChange={handleProgressChange} checked={localPatientData.progress.includes('더운계절')} />
     더운계절
@@ -248,26 +263,15 @@ const PatientForm: React.FC = () => {
     <input type="checkbox" value="눈/비 올때" onChange={handleProgressChange} checked={localPatientData.progress.includes('눈/비 올때')} />
     눈/비 올때
     </label>
-
-
-      <br />
-      <br />
-      <label>
-        연령대:
+    <label className="bg-transparent border border-gray-100 p-0 rounded-md appearance-none mr-2">
+      <input type="checkbox" value="나타났다 사라졌다" onChange={handleProgressChange} checked={localPatientData.progress.includes('나타났다 사라졌다')} />
+      나타났다 사라졌다
     </label>
-        <select value={localPatientData.ageGroup} onChange={handleAgeGroupChange} className="bg-transparent  border border-gray-100 p-0 rounded-md appearance-none">
-          <option value="영아">0-2세(영아)</option>
-          <option value="유아">2-6세(유아)</option>
-          <option value="어린이">6-13세(어린이)</option>
-          <option value="청소년">13-19세(청소년)</option>
-          <option value="20대">20대</option>
-          <option value="30대">30대</option>
-          <option value="40대">40대</option>
-          <option value="50대">50대</option>
-          <option value="60대이상">60대이상</option>            
-          {/* 연령대 옵션 */}
-        </select>
+    </div>
+
       <br />
+      <br />
+
       <button type="submit" className="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-4 rounded">다음</button>
     </form>
   );

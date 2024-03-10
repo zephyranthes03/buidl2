@@ -14,6 +14,11 @@ pnpm dev
 bun dev
 ```
 
+To install next.js with npm comment,
+```
+npm install next@latest react@latest react-dom@latest
+```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.

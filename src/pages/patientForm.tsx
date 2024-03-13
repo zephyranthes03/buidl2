@@ -74,6 +74,9 @@ const PatientForm: React.FC = () => {
     };
 
   return (
+    <main
+      className={`flex min-h-screen flex-col items-left justify-between p-12`}
+    >    
     <form onSubmit={handleSubmit}>
      {localPatientData.imageBase64 && <Image src={localPatientData.imageBase64} width={1080} height={1920} alt="Uploaded" />}
 
@@ -274,6 +277,7 @@ const PatientForm: React.FC = () => {
 
       <button type="submit" className="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-4 rounded">다음</button>
     </form>
+    </main>    
   );
 };
 

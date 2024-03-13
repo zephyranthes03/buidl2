@@ -41,6 +41,9 @@ const RequestResult: React.FC = () => {
 
 //   const [patientData, setPatientData] = useState<PatientData>({ name: '', ageGroup: '', imageBase64: '' });
   return (
+    <main
+      className={`flex min-h-screen flex-col items-left justify-between p-12`}
+    >      
     <div>
       <h1>환자 정보 확인</h1>
       {patientData && (
@@ -79,7 +82,7 @@ const RequestResult: React.FC = () => {
 
       </div>
     </div>
-        
+    </main>
   );
 };
 

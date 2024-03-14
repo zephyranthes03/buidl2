@@ -76,7 +76,7 @@ const PatientForm: React.FC = () => {
   return (
     <main
       className={`flex min-h-screen flex-col items-left justify-between p-12`}
-    >    
+    >
     <form onSubmit={handleSubmit}>
      {localPatientData.imageBase64 && <Image src={localPatientData.imageBase64} width={1080} height={1920} alt="Uploaded" />}
 

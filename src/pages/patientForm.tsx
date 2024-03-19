@@ -275,7 +275,7 @@ const PatientForm: React.FC = () => {
       <br />
       <br />
 
-      <button type="submit" className="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-4 rounded">다음</button>
+      <button type="submit" className="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-4 rounded">진단 실행</button>
     </form>
     </main>    
   );

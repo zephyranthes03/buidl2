@@ -75,7 +75,7 @@ const RequestResult: React.FC = () => {
           <div className="flex justify-center items-center h-screen"> {/* 화면 전체를 채우는 flex 컨테이너 */}
             <div className="flex flex-col items-center"> {/* 수직 정렬을 위한 flex 컬럼 */}
               <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
-              <p className="text-lg mt-4">...Analysing... </p> {/* 로딩 텍스트 */}
+              <p className="text-lg mt-4">...Analysing </p> {/* 로딩 텍스트 */}
             </div>
           </div>
         )}

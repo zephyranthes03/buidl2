@@ -45,7 +45,7 @@ const RequestResult: React.FC = () => {
       className={`flex min-h-screen flex-col items-left justify-between p-12`}
     >      
     <div>
-      <h1>환자 정보 확인</h1>
+      <h1>입력정보 확인</h1>
       {patientData && (
         <div>
           <p>증상: {patientData.symptom.join(',')}</p>
@@ -62,9 +62,10 @@ const RequestResult: React.FC = () => {
       )}
 
       <div>
+      <h1>진단 결과 확인</h1>
         {apiResponse.message_array && apiResponse.message_array.length > 0 && (
           <div>
-            <p>진단 성공/실패: {apiResponse.success.toString()}</p>
+            {/* <p>진단 성공/실패: {apiResponse.success.toString()}</p> */}
             <p>진단 결과:</p>
             {apiResponse.message_array.map((line, index) => (
               <p key={index}>{line}</p>

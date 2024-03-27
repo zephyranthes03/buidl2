@@ -6,6 +6,8 @@ export interface PatientData {
   affectedArea: string[];
   progress: string[];
   imageBase64: string;
+  feedback: string;
+  comment: string;
 }
 
 interface PatientDataContextProps {
@@ -28,7 +30,7 @@ interface PatientDataProviderProps {
 }
 
 export const PatientDataProvider: React.FC<PatientDataProviderProps> = ({ children }) => {
-  const [patientData, setPatientData] = useState<PatientData>({ ageGroup: '', symptom: [], affectedArea: [], progress: [], imageBase64: '' });
+  const [patientData, setPatientData] = useState<PatientData>({ ageGroup: '', symptom: [], affectedArea: [], progress: [], imageBase64: '', feedback: '', comment: '' });
 
   return (
     <PatientDataContext.Provider value={{ patientData, setPatientData }}>

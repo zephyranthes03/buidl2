@@ -81,7 +81,7 @@ const CameraApp: React.FC = () => {
   const savePhoto = (canvas: HTMLCanvasElement) => {
     const imageDataUrl = canvas.toDataURL('image/jpeg'); // 캔버스의 내용을 이미지 데이터로 변환
 
-    setPatientData({ ageGroup: '', symptom: [], affectedArea: [], progress: [], imageBase64: imageDataUrl });
+    setPatientData({ ageGroup: '', symptom: [], affectedArea: [], progress: [], feedback: '', comment: '', imageBase64: imageDataUrl });
     router.push('/patientForm');
     // // 이미지 데이터를 이용하여 사용자에게 다운로드 링크 제공
     // const link = document.createElement('a');

@@ -52,7 +52,6 @@ export const FeedbackForm: React.FC = () => {
         <textarea
             id="comment"
             name="comment"
-            rows="7"
             onChange={(e) => setComment(e.target.value)}
             className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md"
             placeholder="저희 결과에 만족하지 못하신 이유를 간략하게 설명해주시면 서비스 성능 향상에 도움이 됩니다. 피드백을 입력하는게 망설여지신다면, 불만족을 선택해 알려주시는 것만으로도 큰 도움이 됩니다."

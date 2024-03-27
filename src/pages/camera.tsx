@@ -78,6 +78,12 @@ const CameraApp: React.FC = () => {
   };
 
 
+  const skipPhoto = () => {
+    setPatientData({ ageGroup: '', symptom: [], affectedArea: [], progress: [], feedback: '', comment: '', imageBase64: '' });
+    router.push('/patientForm');
+  };
+
+
   const savePhoto = (canvas: HTMLCanvasElement) => {
     const imageDataUrl = canvas.toDataURL('image/jpeg'); // 캔버스의 내용을 이미지 데이터로 변환
 
@@ -143,11 +149,12 @@ const CameraApp: React.FC = () => {
         <video ref={videoRef} className="w-full h-full object-cover"></video>
       </div>
       <br/>
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-3 lg:text-left">
-      <button className="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-4 rounded" onClick={switchCamera}>Switch Camera</button> &nbsp;
-      <button className="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-4 rounded" onClick={takePhoto}>Take Photo</button>
-      {/* <button className="m-4" onClick={uploadImage}>Upload Image</button> */}
+      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-5 lg:text-left">
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
+
+      <button className="bg-blue-600 hover:bg-blue-900 font-bold py-2 px-2 rounded" onClick={switchCamera}>Switch Camera</button> &nbsp;
+      <button className="bg-blue-600 hover:bg-blue-900 font-bold py-2 px-2 rounded" onClick={takePhoto}>Take Photo</button> &nbsp;
+      <button className="bg-blue-600 hover:bg-blue-900 font-bold py-2 px-2 rounded" onClick={skipPhoto}>Skip</button>
       {/* {defaultImageSize && <p>Image Size: {defaultImageSize.width} x {defaultImageSize.height}</p>} */}
       </div>
     <Footer />

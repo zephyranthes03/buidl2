@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { Header } from '@/components/header';
+import { Footer } from '@/components/footer';
 import Image from "next/image";
 
 import { PatientData, usePatientData } from '../contexts/PatientDataContext';
@@ -77,6 +79,7 @@ const PatientForm: React.FC = () => {
     <main
       className={`flex min-h-screen flex-col items-left justify-between p-12`}
     >
+      <Header />
     <form onSubmit={handleSubmit}>
      {localPatientData.imageBase64 !== '' && <Image src={localPatientData.imageBase64} width={1080} height={1920} alt="Uploaded" />}
 
@@ -280,6 +283,10 @@ const PatientForm: React.FC = () => {
 
       <button type="submit" className="bg-blue-500 hover:bg-blue-700  font-bold py-2 px-4 rounded">진단 실행</button>
     </form>
+    <br/>
+    <br/>
+    <br/>
+    <Footer />
     </main>    
   );
 };

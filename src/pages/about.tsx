@@ -22,7 +22,8 @@ export default function About() {
           priority
         />
       </div>
-      <div className="mb-12 grid text-left lg:max-w-5xl lg:w-full lg:mb-0 lg:text-center ">
+
+      <div className="mb-2 grid text-left lg:max-w-5xl lg:w-full lg:mb-0 lg:text-center ">
       <h2 className="mb-3 text-left text-2xl font-semibold">
         FTS Team {" "}
       </h2>

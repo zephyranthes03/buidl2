@@ -38,7 +38,7 @@ const RequestResult: React.FC = () => {
           ...response,
           message_array: messageArray
         });        
-        
+
         setInitialLoad(false); // 첫 로딩이 완료되었으므로 false로 설정
         setIsLoading(false); // 로딩 완료
 
@@ -57,7 +57,8 @@ const RequestResult: React.FC = () => {
   return (
     <main
       className={`flex min-h-screen flex-col items-left justify-between p-12`}
-    >      
+    >
+      <Header />
     <div>
 
       <div>
@@ -110,6 +111,7 @@ const RequestResult: React.FC = () => {
 
       </div>
     </div>
+    <Footer />
     </main>
   );
 };

@@ -80,6 +80,7 @@ const PatientForm: React.FC = () => {
       className={`flex min-h-screen flex-col items-left justify-between p-12`}
     >
       <Header />
+      <br/>
     <form onSubmit={handleSubmit}>
      {localPatientData.imageBase64 !== '' && <Image src={localPatientData.imageBase64} width={1080} height={1920} alt="Uploaded" />}
 
@@ -287,7 +288,7 @@ const PatientForm: React.FC = () => {
     <br/>
     <br/>
     <Footer />
-    </main>    
+    </main>
   );
 };
 

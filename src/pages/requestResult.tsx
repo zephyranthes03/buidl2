@@ -6,6 +6,7 @@ import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { FeedbackForm } from '../components/reequestResult/FeedbackForm'
 import { PatientData, usePatientData } from '../contexts/PatientDataContext';
+import { LlmData, useLlmData } from '../contexts/LLMDataContext';
 
 
 const RequestResult: React.FC = () => {
@@ -14,7 +15,7 @@ const RequestResult: React.FC = () => {
 
   const { patientData } = usePatientData();
   const request: PostData = { symptom_text : '', base64_image: ''};
-  const [apiResponse, setApiResponse] = useState<ApiResponse>({ success: false, message: '', message_array: [] });
+  const [apiResponse, setApiResponse] = useState<ApiResponse>({ success: false, message: '', message_array: [], id: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true); // 첫 번째 로딩을 추적하는 상태
 
@@ -36,7 +37,8 @@ const RequestResult: React.FC = () => {
         const messageArray = response.message.split('\n');
         setApiResponse({
           ...response,
-          message_array: messageArray
+          message_array: messageArray,
+          id: response.id
         });        
 
         setInitialLoad(false); // 첫 로딩이 완료되었으므로 false로 설정

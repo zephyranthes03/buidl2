@@ -1,25 +1,53 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { LlmResultData, LlmResultDataForUpdate, ApiResponse, putToExternalApi } from '@/rest/symptom_index';
 
 import { PatientData, usePatientData } from '@/contexts/PatientDataContext';
+import { LlmData, useLlmData } from '@/contexts/LLMDataContext';
+
+type Props = {
+  patientData: PatientData;
+  llmData: LlmData;
+};
 
 export const FeedbackForm: React.FC = () => {
   const [feedback, setFeedback] = useState('');
   const [comment, setComment] = useState('');
 
   const router = useRouter();
-  const { setPatientData } = usePatientData();
+  const { patientData, setPatientData } = usePatientData();
+  const { llmData, setLlmData } = useLlmData();
+  const [apiResponse, setApiResponse] = useState<ApiResponse>({ success: false, feedback: 2, message_content: '', id:'' });
 
-  const { patientData } = usePatientData();
-  
   const updateFeedback = (feedback: string) => {
-    setPatientData({ ageGroup: patientData.ageGroup, symptom: patientData.symptom, affectedArea: patientData.affectedArea, progress: patientData.progress, feedback: feedback, comment: patientData.comment, imageBase64: patientData.imageBase64 });
     setFeedback(feedback);
 
   };
 
   const updateComment = () => {
-    setPatientData({ ageGroup: patientData.ageGroup, symptom: patientData.symptom, affectedArea: patientData.affectedArea, progress: patientData.progress, feedback: patientData.feedback, comment: comment, imageBase64: patientData.imageBase64 });
+    const handleApiCall = async () => {
+      let feedback_number = 0;
+      if (feedback == '불만족') {
+        feedback_number = 3;
+      } else {
+        feedback_number = 1;
+      }
+      setLlmData({ id: llmData.id , instruction: llmData.instruction, input: llmData.input, image_base64: llmData.image_base64, output: llmData.output, feedback: feedback_number, feedback_content: comment});
+
+      const request: LlmResultDataForUpdate = {
+        id: llmData.id,
+        feedback: llmData.feedback,
+        feedback_content: llmData.feedback_content
+      };
+      const response = await putToExternalApi(request);
+
+      setApiResponse({
+        ...response,
+        message_content: response.message_content,
+        id: response.id
+      });  
+        
+    };
     router.push('/thanksForm');
   };
 

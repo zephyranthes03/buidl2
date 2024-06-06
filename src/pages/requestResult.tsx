@@ -15,7 +15,7 @@ const RequestResult: React.FC = () => {
 
   const { patientData } = usePatientData();
   const request: PostData = { symptom_text : '', base64_image: ''};
-  const [apiResponse, setApiResponse] = useState<ApiResponse>({ success: false, message: '', message_array: [], id: '' });
+  const [apiResponse, setApiResponse] = useState<ApiResponse>({ success: false, feedback: 2, message_content: '', id: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true); // 첫 번째 로딩을 추적하는 상태
 
@@ -34,12 +34,23 @@ const RequestResult: React.FC = () => {
                         `연령대 : ${patientData.ageGroup}`
         };
         const response = await postToExternalApi(request);
-        const messageArray = response.message.split('\n');
-        setApiResponse({
-          ...response,
-          message_array: messageArray,
-          id: response.id
-        });        
+        if (response && response.hasOwnProperty('message_content')) {
+          setApiResponse({
+            ...response,
+            feedback: 2,
+            success: true,
+            id: response.id
+          });                 
+        } else {
+          setApiResponse({
+            ...response,
+            feedback: 2,
+            success: false,
+            id: response.id
+          });                 
+
+        }
+ 
 
         setInitialLoad(false); // 첫 로딩이 완료되었으므로 false로 설정
         setIsLoading(false); // 로딩 완료
@@ -64,14 +75,12 @@ const RequestResult: React.FC = () => {
     <div>
 
       <div>
-        {apiResponse.message_array && apiResponse.message_array.length > 0 && (
+        {apiResponse.message_content && apiResponse.message_content.length > 0 && (
           <div>
             <h1>진단 결과 확인</h1>
             {/* <p>진단 성공/실패: {apiResponse.success.toString()}</p> */}
             <p>진단 결과:</p>
-            {apiResponse.message_array.map((line, index) => (
-              <p key={index}>{line}</p>
-            ))}
+            {apiResponse.message_content}
             <br/>
             <br/>
 
